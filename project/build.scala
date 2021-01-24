@@ -22,9 +22,13 @@ object build {
   val supportedScalaVersions = List("2.12.12", "2.13.3")
   val mScalaVersion = supportedScalaVersions(0)
 
+  /**shared deps*/
+  val cm = Seq(name := "stdScala", organization := "com.doofin",version:="0.1")
+
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure) in file("shared"))
     .settings(
+      cm,
       resolvers ++= Seq("jitpack" at "https://jitpack.io"),
       crossScalaVersions := supportedScalaVersions,
       scalaVersion := mScalaVersion,
@@ -35,6 +39,7 @@ object build {
     .dependsOn(sharedPure.js)
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin) //ScalaJSWeb is for sourcemap
     .settings(
+      cm,
       scalacOptions ++= mScalacOptions,
       libraryDependencies ++= deps.jsDeps.value,
       webpackBundlingMode := BundlingMode.LibraryAndApplication(),
@@ -51,6 +56,7 @@ object build {
     .dependsOn(sharedPure.jvm)
     .enablePlugins(JavaAppPackaging, UniversalPlugin)
     .settings(
+      cm,
       crossScalaVersions := supportedScalaVersions,
       libraryDependencies ++= (deps.jvmDeps
         ++ (CrossVersion
