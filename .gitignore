@@ -1,0 +1,43 @@
+# scala js
+js-opt-bundle.js
+package-lock.json
+node_modules
+
+# logs
+*.log
+log.txt
+
+
+# sbt specific
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# ide
+.scala_dependencies
+.worksheet
+.idea
+.vscode
+.bsp
+
+# Emacs
+\#*
+.\#*
+
+# ensime,metals
+.ensime
+.ensime_cache
+.bloop
+.metals
+
+# binary
+*.jar
+*.war
+*.ear
+*.class
