@@ -17,17 +17,17 @@ import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 import com.typesafe.sbt.packager.universal.UniversalPlugin
 
 object build {
-  val mScalaVersion = "2.13.3" //2.13.3
-
   val mScalacOptions = Seq()
-//    Seq("-Xcheckinit", "-language:postfixOps", "-Xmigration", "-deprecation")
-  val supportedScalaVersions = List("2.12.12", mScalaVersion)
+  //    Seq("-Xcheckinit", "-language:postfixOps", "-Xmigration", "-deprecation")
+  val supportedScalaVersions = List("2.12.12", "2.13.3")
+  val mScalaVersion = supportedScalaVersions(0)
 
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure) in file("shared"))
     .settings(
+      resolvers ++= Seq("jitpack" at "https://jitpack.io"),
+      crossScalaVersions := supportedScalaVersions,
       scalaVersion := mScalaVersion,
-      cancelable := true,
       libraryDependencies ++= deps.sharedDeps.value
     )
 
@@ -51,15 +51,17 @@ object build {
     .dependsOn(sharedPure.jvm)
     .enablePlugins(JavaAppPackaging, UniversalPlugin)
     .settings(
-      resolvers ++= Seq(
-        "jitpack" at "https://jitpack.io"
-      ),
       crossScalaVersions := supportedScalaVersions,
-      libraryDependencies ++= (deps.jvmDepsAll
-        .map(_.exclude("org.slf4j", "slf4j-nop")) ++ Seq(
-        "org.apache.spark" %% "spark-core" % "3.0.0-X1",
-        "com.github.doofin" % "akka-http-session" % "6e3613bc34"
-      )),
+      libraryDependencies ++= (deps.jvmDeps
+        ++ (CrossVersion
+          .partialVersion(scalaVersion.value) match {
+          case Some((2, major)) if major <= 12 =>
+            Seq()
+          case _ =>
+            Seq(
+              "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0"
+            )
+        })),
       watchSrc
     )
 

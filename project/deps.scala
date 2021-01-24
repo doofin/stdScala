@@ -26,23 +26,19 @@ object deps {
   )
 
   private val catsV = "2.1.1" //1.4.0
-  private val typesAndcatsDeps = Seq(
-    "org.typelevel" %% "cats-core" % catsV,
-    "org.typelevel" %% "cats-free" % catsV,
-    "com.github.julien-truffaut" %% "monocle-core" % "2.0.5",
-    "com.github.julien-truffaut" %% "monocle-generic" % "2.0.5",
-    "com.github.julien-truffaut" %% "monocle-macro" % "2.0.5"
-  )
-
   private val jvmLogging = Seq(
     "ch.qos.logback" % "logback-classic" % "1.2.3",
     "org.slf4j" % "slf4j-api" % "1.7.30"
   )
 
-  val jvmDepsAll = typesAndcatsDeps ++ jvmLogging ++ Seq(
-    "org.scala-lang.modules" %% "scala-parallel-collections" % "0.2.0",
-    "org.scalatest" %% "scalatest" % "3.0.8" % Test,
-    "org.scala-lang" % "scala-compiler" % "2.13.4"
-  )
+  val jvmDeps = Seq(
+    "org.typelevel" %% "cats-core" % catsV,
+    "org.typelevel" %% "cats-free" % catsV,
+    "com.github.julien-truffaut" %% "monocle-core" % "2.0.5",
+    "com.github.julien-truffaut" %% "monocle-generic" % "2.0.5",
+    "com.github.julien-truffaut" %% "monocle-macro" % "2.0.5",
+    "org.scalatest" %% "scalatest" % "3.0.8" % Test
+//    "org.scala-lang" % "scala-compiler" % "2.13.4"
+  ) ++ jvmLogging
 
 }
