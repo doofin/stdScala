@@ -1,6 +1,5 @@
 package stdScala
 
-import boopickle.UnpickleImpl
 import org.scalatest.FunSuite
 import stdScala._
 class testMain extends FunSuite {
