@@ -13,6 +13,8 @@ trait types {
   val unit: Unit = ()
   def undefined: Nothing = ???
 
+  def identityF[t](x: t) = x
+
   trait FlattenTuple extends Poly1 {
     implicit def default[T] = at[T](Tuple1.apply)
   }

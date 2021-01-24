@@ -1,3 +1,8 @@
 package com.doofin
 
-package object stdScala extends utils with types with dataOps {}
+package object stdScala
+    extends miscUtils
+    with types
+    with dataOps
+    with math
+    with stdImplicits {}

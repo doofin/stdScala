@@ -4,7 +4,7 @@ import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 import scala.language.implicitConversions
 
-object stdImplicits {
+trait stdImplicits {
   implicit def d2s(d: Double): String = d.toString
   implicit def f2s(d: Float): String = d.toString
 
@@ -32,6 +32,10 @@ object stdImplicits {
   //  def awaitFuture[t](x: => Future[t]): t = Await result (x, Duration.Inf)
   implicit class futOps[t](f: Future[t]) {
     def unwarp = Await.result(f, Duration.Inf)
+  }
+
+  implicit class seqOps[t](xs: Seq[t]) {
+    def elimSeq[b](x: b, f: (b, t) => b) = xs.foldLeft(x)(f)
   }
 
 }

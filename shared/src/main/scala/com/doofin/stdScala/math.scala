@@ -1,10 +1,9 @@
 package com.doofin.stdScala
+
 import scala.language.postfixOps
 import scala.math._
 
-import stdImplicits._
-
-object math {
+trait math {
 
   /** boolean */
   /**true if one of args is true*/
@@ -81,6 +80,5 @@ object math {
     def distanceX(vec: Vector2): Float = (this.x - vec.x)
     def distanceY(vec: Vector2): Float = (this.y - vec.y)
   }
-
 
 }

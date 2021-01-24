@@ -3,10 +3,13 @@ package com.doofin.stdScala
 import scala.reflect.ClassTag
 
 trait dataOps {
+
+  /** collect subtype*/
   def collectT[a, T: ClassTag](xs: Seq[a]): Seq[T] = xs.collect {
     case x: T => x
   }
 
+  /** group by custom equality test*/
   def groupByEqu[t](p: Seq[t], equF: t => t => Boolean): Seq[Seq[t]] = {
     var ins: Set[t] = p.toSet
     var outs: Seq[Seq[t]] = Seq()
@@ -53,8 +56,5 @@ trait dataOps {
     r
   }
 
-  implicit class seqext[t](xs: Seq[t]) {
-    def elimSeq[b](x: b, f: (b, t) => b) = xs.foldLeft(x)(f)
-  }
 
 }

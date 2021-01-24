@@ -22,13 +22,13 @@ object build {
   val supportedScalaVersions = List("2.12.12", "2.13.3")
   val mScalaVersion = supportedScalaVersions(0)
 
-  /**shared deps*/
-  val cm = Seq(name := "stdScala", organization := "com.doofin",version:="0.1")
+  val cmSettings =
+    Seq(name := "stdscala", organization := "com.doofin", version := "0.1")
 
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure) in file("shared"))
     .settings(
-      cm,
+      cmSettings,
       resolvers ++= Seq("jitpack" at "https://jitpack.io"),
       crossScalaVersions := supportedScalaVersions,
       scalaVersion := mScalaVersion,
@@ -39,7 +39,7 @@ object build {
     .dependsOn(sharedPure.js)
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin) //ScalaJSWeb is for sourcemap
     .settings(
-      cm,
+      cmSettings,
       scalacOptions ++= mScalacOptions,
       libraryDependencies ++= deps.jsDeps.value,
       webpackBundlingMode := BundlingMode.LibraryAndApplication(),
@@ -48,15 +48,14 @@ object build {
         .withSourceMap(false)
         .withModuleKind(ModuleKind.CommonJSModule),
 //      https://github.com/scala-js/scala-js/issues/4305
-      scalaJSLinkerConfig ~= { _.withESFeatures(_.withAvoidClasses(false)) },
-      watchSrc
+      scalaJSLinkerConfig ~= { _.withESFeatures(_.withAvoidClasses(false)) }
     )
 
   lazy val jvm = (project in file("jvm"))
     .dependsOn(sharedPure.jvm)
     .enablePlugins(JavaAppPackaging, UniversalPlugin)
     .settings(
-      cm,
+      cmSettings,
       crossScalaVersions := supportedScalaVersions,
       libraryDependencies ++= (deps.jvmDeps
         ++ (CrossVersion
@@ -67,21 +66,6 @@ object build {
             Seq(
               "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0"
             )
-        })),
-      watchSrc
+        }))
     )
-
-  def watchSrc = watchSources := {
-    val sources1 = Seq(
-      srcDir(baseDirectory.value / "src/main"),
-      srcDir((ThisBuild / baseDirectory).value / "shared/src/main")
-    )
-    sources1
-  }
-
-  def srcDir(base: sbt.io.syntax.File) = new Source(
-    base,
-    sbt.io.AllPassFilter,
-    sbt.io.HiddenFileFilter
-  )
 }
