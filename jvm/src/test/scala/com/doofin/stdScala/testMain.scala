@@ -1,7 +1,6 @@
-package stdScala
+package com.doofin.stdScala
 
 import org.scalatest.FunSuite
-import stdScala._
 class testMain extends FunSuite {
   test("shapeless") {
 

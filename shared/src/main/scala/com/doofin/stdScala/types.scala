@@ -1,4 +1,4 @@
-package stdScala
+package com.doofin.stdScala
 
 import shapeless._
 import poly._

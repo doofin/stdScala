@@ -1,4 +1,4 @@
-package stdScala
+package com.doofin.stdScala
 
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration

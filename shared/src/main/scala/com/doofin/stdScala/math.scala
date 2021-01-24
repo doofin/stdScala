@@ -1,4 +1,4 @@
-package stdScala
+package com.doofin.stdScala
 import scala.language.postfixOps
 import scala.math._
 
