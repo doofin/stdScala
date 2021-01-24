@@ -26,7 +26,6 @@ object build {
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure) in file("shared"))
     .settings(
-      crossScalaVersions := supportedScalaVersions,
       scalaVersion := mScalaVersion,
       cancelable := true,
       libraryDependencies ++= deps.sharedDeps.value
@@ -38,7 +37,6 @@ object build {
     .settings(
       scalacOptions ++= mScalacOptions,
       libraryDependencies ++= deps.jsDeps.value,
-//      npmDependencies in Compile ++= deps.npmDeps,
       webpackBundlingMode := BundlingMode.LibraryAndApplication(),
       scalaJSUseMainModuleInitializer := true,
       scalaJSLinkerConfig := StandardConfig()
@@ -51,18 +49,17 @@ object build {
 
   lazy val jvm = (project in file("jvm"))
     .dependsOn(sharedPure.jvm)
-    .enablePlugins(JavaAppPackaging, UniversalPlugin) // SbtWeb for web assets https://github.com/sbt/sbt-web
-    .settings( //log4j-over-slf4j
+    .enablePlugins(JavaAppPackaging, UniversalPlugin)
+    .settings(
       resolvers ++= Seq(
-        Resolver.bintrayRepo("smarter", "maven"),
         "jitpack" at "https://jitpack.io"
       ),
+      crossScalaVersions := supportedScalaVersions,
       libraryDependencies ++= (deps.jvmDepsAll
         .map(_.exclude("org.slf4j", "slf4j-nop")) ++ Seq(
         "org.apache.spark" %% "spark-core" % "3.0.0-X1",
         "com.github.doofin" % "akka-http-session" % "6e3613bc34"
       )),
-      //        .map(_.exclude("org.slf4j", "log4j-over-slf4j")),
       watchSrc
     )
 
