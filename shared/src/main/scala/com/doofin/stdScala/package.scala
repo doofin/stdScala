@@ -5,4 +5,5 @@ package object stdScala
     with types
     with dataOps
     with math
+    with stdSerializers
     with stdImplicits {}

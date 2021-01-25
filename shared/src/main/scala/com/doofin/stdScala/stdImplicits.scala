@@ -5,8 +5,6 @@ import scala.concurrent.duration.Duration
 import scala.language.implicitConversions
 
 trait stdImplicits {
-  implicit def d2s(d: Double): String = d.toString
-  implicit def f2s(d: Float): String = d.toString
 
   implicit def i2f(d: Int): Float = d.toFloat
   implicit def i2d(d: Int) = d.toDouble
@@ -18,14 +16,13 @@ trait stdImplicits {
   }
 
   implicit class boolOps(x: Boolean) { //
-    /**usage : (true ? "a") ("b") */
-    def ?[t](a: t)(b: t): t = {
-      if (x) a else b
-    }
+    /**usage : true ? (1,2) */
+    def ?[t](a: t, b: t): t = if (x) a else b
   }
-  implicit def seq2str(xs: Seq[String]): String = xs reduce (_ + ",,,," + _)
 
-  implicit final class ArrowAssoc2[A](x: A) {
+//  implicit def seq2str(xs: Seq[String]): String = xs reduce (_ + ",,,," + _)
+
+  implicit final class pairIntro[A](x: A) {
     @inline def --[B](y: B): (A, B) = (x, y)
   }
 

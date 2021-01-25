@@ -23,7 +23,11 @@ object build {
   val mScalaVersion = supportedScalaVersions(0)
 
   val cmSettings =
-    Seq(name := "stdscala", organization := "com.doofin", version := "0.1")
+    Seq(
+      name := "stdscala",
+      organization := "com.doofin",
+      version := "0.1-SNAPSHOT"
+    )
 
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
     .crossType(CrossType.Pure) in file("shared"))

@@ -2,12 +2,9 @@ package com.doofin.stdScala
 
 import scala.language.implicitConversions
 
-
 import java.util.Base64._
 import java.util.Date
 import java.util.concurrent.TimeUnit
-
-
 
 trait miscUtils {
   val currTime = () => System.currentTimeMillis()
