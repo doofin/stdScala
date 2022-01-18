@@ -6,6 +6,9 @@ a very small library a math and other std lib functions for scala
 
 publish on jitpack
 
+# usage : 
+
+`"com.github.doofin.stdScala" %% "stdscala"  % "c9d19a6db3"`
 
 # content
 
