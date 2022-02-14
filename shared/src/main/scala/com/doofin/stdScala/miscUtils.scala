@@ -1,10 +1,10 @@
 package com.doofin.stdScala
 
 import scala.language.implicitConversions
-
 import java.util.Base64._
 import java.util.Date
 import java.util.concurrent.TimeUnit
+import scala.util.{Failure, Success, Try}
 
 trait miscUtils {
   val currTime = () => System.currentTimeMillis()
@@ -12,6 +12,15 @@ trait miscUtils {
 
   def base64encode = getEncoder
   def base64decode = getDecoder
+
+  def throwE[t](f: => t, msg: String = "") = {
+    Try(f) match {
+      case Failure(exception) =>
+        throw new RuntimeException(s"$msg , ${exception.getMessage}")
+      case Success(value) => value
+    }
+
+  }
 
   /**simple log */
   def lg(x: Any)(implicit name: String = "") = println(s"$name : $x")

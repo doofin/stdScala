@@ -26,11 +26,11 @@ object build {
     Seq(
       name := "stdscala",
       organization := "com.doofin",
-      version := "0.1-SNAPSHOT"
+      version := "0.2-SNAPSHOT"
     )
 
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
-    .crossType(CrossType.Pure) in file("shared"))
+    .crossType(CrossType.Full) in file("."))
     .settings(
       cmSettings,
       resolvers ++= Seq("jitpack" at "https://jitpack.io"),
@@ -41,7 +41,10 @@ object build {
 
   lazy val js: Project = (project in file("js"))
     .dependsOn(sharedPure.js)
-    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin) //ScalaJSWeb is for sourcemap
+    .enablePlugins(
+      ScalaJSPlugin,
+      ScalaJSBundlerPlugin
+    ) //ScalaJSWeb is for sourcemap
     .settings(
       cmSettings,
       scalacOptions ++= mScalacOptions,
@@ -62,14 +65,32 @@ object build {
       cmSettings,
       crossScalaVersions := supportedScalaVersions,
       libraryDependencies ++= (deps.jvmDeps
-        ++ (CrossVersion
-          .partialVersion(scalaVersion.value) match {
-          case Some((2, major)) if major <= 12 =>
-            Seq()
-          case _ =>
-            Seq(
-              "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0"
-            )
-        }))
+        ++ (if (!checkScV().value)
+              Seq(
+                "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0",
+                "org.apache.spark" %% "spark-core" % "2.4.0" % "provided"
+              )
+            else Seq()))
     )
+
+  def check212Or213() = Def.setting {
+    val scalaV = scalaVersion.value
+    if (scalaV.startsWith("2.12")) true
+    else {
+      println("scalaV:", scalaV)
+      false
+    }
+  }
+
+  def checkScV() = {
+    Def.setting(
+      CrossVersion
+        .partialVersion(scalaVersion.value) match {
+        case Some((2, major)) if major <= 12 =>
+          true
+        case _ =>
+          false
+      }
+    )
+  }
 }
