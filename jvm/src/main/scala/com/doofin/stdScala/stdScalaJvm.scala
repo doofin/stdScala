@@ -1,6 +1,7 @@
 package com.doofin
+import com.doofin.stdScala._
 
-package object stdScalaJvm
+object stdScalaJvm
     extends miscUtils
     with types
     with dataOps

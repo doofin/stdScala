@@ -30,7 +30,14 @@ object build {
     )
 
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
-    .crossType(CrossType.Full) in file("."))
+    .crossType(CrossType.Full)
+    .jvmConfigure(_.enablePlugins(JavaAppPackaging, UniversalPlugin))
+    .jsConfigure(
+      _.enablePlugins(
+        ScalaJSPlugin,
+        ScalaJSBundlerPlugin
+      )
+    ) in file("."))
     .settings(
       cmSettings,
       resolvers ++= Seq("jitpack" at "https://jitpack.io"),
@@ -38,8 +45,27 @@ object build {
       scalaVersion := mScalaVersion,
       libraryDependencies ++= deps.sharedDeps.value
     )
+    .jvmSettings(
+      libraryDependencies ++= (deps.jvmDeps
+        ++ (if (!checkScV().value)
+              Seq(
+                "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0",
+                "org.apache.spark" %% "spark-core" % "2.4.0" % "provided"
+              )
+            else Seq()))
+    )
+    .jsSettings(
+      libraryDependencies ++= deps.jsDeps.value,
+      webpackBundlingMode := BundlingMode.LibraryAndApplication(),
+      scalaJSUseMainModuleInitializer := true,
+      scalaJSLinkerConfig := StandardConfig()
+        .withSourceMap(false)
+        .withModuleKind(ModuleKind.CommonJSModule),
+//      https://github.com/scala-js/scala-js/issues/4305
+      scalaJSLinkerConfig ~= { _.withESFeatures(_.withAvoidClasses(false)) }
+    )
 
-  lazy val js: Project = (project in file("js"))
+  /*   lazy val js: Project = (project in file("js"))
     .dependsOn(sharedPure.js)
     .enablePlugins(
       ScalaJSPlugin,
@@ -72,7 +98,7 @@ object build {
               )
             else Seq()))
     )
-
+   */
   def check212Or213() = Def.setting {
     val scalaV = scalaVersion.value
     if (scalaV.startsWith("2.12")) true

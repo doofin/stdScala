@@ -4,7 +4,7 @@
 //https://github.com/circe/circe/issues/1620
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.3.1") //"1.1.1"
 //cross
-addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.0.0")
+addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.2.0")
 //bundler
 addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0") //"0.18.0"
 //other
