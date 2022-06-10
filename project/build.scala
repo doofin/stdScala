@@ -49,8 +49,8 @@ object build {
       libraryDependencies ++= (deps.jvmDeps
         ++ (if (!checkScV().value)
               Seq(
-                "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0",
-                "org.apache.spark" %% "spark-core" % "2.4.0" % "provided"
+                "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0"
+                // "org.apache.spark" %% "spark-core" % "2.4.0" % "provided"
               )
             else Seq()))
     )
