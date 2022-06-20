@@ -9,7 +9,7 @@ import scala.util.{Failure, Success, Try}
 trait miscUtils {
   val currTime = () => System.currentTimeMillis()
   lazy val getHomeDir: String = System.getProperty("user.home")
-
+  lazy val getCurrDir: String = System.getProperty("user.dir")
   def base64encode = getEncoder
   def base64decode = getDecoder
 
