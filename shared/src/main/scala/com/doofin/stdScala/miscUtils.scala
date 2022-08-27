@@ -23,7 +23,7 @@ trait miscUtils {
   }
 
   /**simple log */
-  def lg(x: Any)(implicit name: String = "") = println(s"$name : $x")
+  def lg[t](x: t) = { println(x.toString); x }
 
   val printLine = { () =>
     1 to 2 foreach (_ => print("\n"))
