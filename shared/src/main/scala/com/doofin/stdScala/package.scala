@@ -7,3 +7,5 @@ package object stdScala
     with math
     // with stdSerializers
     with stdImplicits {}
+
+// @main

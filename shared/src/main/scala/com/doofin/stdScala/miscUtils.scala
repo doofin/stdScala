@@ -7,14 +7,15 @@ import scala.util.{Failure, Success, Try}
 
 import scala.language.implicitConversions
 
+/** print utils,etc */
 trait miscUtils {
+  def getHomeDir: String = System.getProperty("user.home")
+  def getCurrDir: String = System.getProperty("user.dir")
   val currTime = () => System.currentTimeMillis()
-  lazy val getHomeDir: String = System.getProperty("user.home")
-  lazy val getCurrDir: String = System.getProperty("user.dir")
+  def getDateStr = new Date().toLocaleString
+  def printdate() = lg(getDateStr)
 
-  // def base64encode = getEncoder
-  // def base64decode = getDecoder
-
+  /** throw new RuntimeException */
   def throwE[t](f: => t, msg: String = "") = {
     Try(f) match {
       case Failure(exception) =>
@@ -24,18 +25,19 @@ trait miscUtils {
 
   }
 
-  def pt(x: Any*) = println(x)
+  def pt(x: Any*) = {
+    x foreach { x =>
+      print(x)
+      print(",")
+    }
+    println()
+    // print(1, 2, "aa", "aagc")
+  }
 
   /** simple log */
   def lg[t](x: t) = { println(x.toString); x }
 
-  val printLine = { () =>
-    1 to 2 foreach (_ => print("\n"))
-  }
-
-  def getDateStr = new Date().toLocaleString
-  def printdate() = lg(getDateStr)
-
+  /** pretty print */
   def pp(x: Any, w: Int = 100): Unit =
     pprint.PPrinter.BlackWhite.pprintln(x, w, 100000)
 
@@ -54,12 +56,10 @@ trait miscUtils {
 
   def encloseDebug[t](d: String, showTime: Boolean = true)(f: => t): t = {
     val st = () => if (showTime) getDateStr else ""
-    echo(s"---------------- $d start ------" + st())
+    println(s"---------------- $d start ------" + st())
     val r = f
-    echo(s"---------------- $d end -----" + st())
+    println(s"---------------- $d end -----" + st())
     r
   }
-
-  val echo: String => Unit = println
 
 }
