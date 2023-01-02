@@ -1,17 +1,19 @@
 package com.doofin.stdScala
 
-import scala.language.implicitConversions
 import java.util.Base64._
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import scala.util.{Failure, Success, Try}
 
+import scala.language.implicitConversions
+
 trait miscUtils {
   val currTime = () => System.currentTimeMillis()
   lazy val getHomeDir: String = System.getProperty("user.home")
   lazy val getCurrDir: String = System.getProperty("user.dir")
-  def base64encode = getEncoder
-  def base64decode = getDecoder
+
+  // def base64encode = getEncoder
+  // def base64decode = getDecoder
 
   def throwE[t](f: => t, msg: String = "") = {
     Try(f) match {
@@ -22,7 +24,9 @@ trait miscUtils {
 
   }
 
-  /**simple log */
+  def pt(x: Any*) = println(x)
+
+  /** simple log */
   def lg[t](x: t) = { println(x.toString); x }
 
   val printLine = { () =>

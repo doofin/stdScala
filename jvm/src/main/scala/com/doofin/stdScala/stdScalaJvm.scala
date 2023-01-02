@@ -4,10 +4,10 @@ import scala.io.AnsiColor._
 
 object stdScalaJvm
     extends miscUtils
-    with types
+    // with types
     with dataOps
     with math
-    with stdSerializers
+    // with stdSerializers
     with stdImplicits
     with jvmUtils {
 

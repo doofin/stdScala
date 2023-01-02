@@ -7,7 +7,7 @@ import scala.language.implicitConversions
 trait stdImplicits {
 
   implicit def i2f(d: Int): Float = d.toFloat
-  implicit def i2d(d: Int) = d.toDouble
+  implicit def i2d(d: Int): Double = d.toDouble
   implicit def d2f(d: Double): Float = d.toFloat
   implicit def f2d(d: Float): Double = d.toDouble
 
@@ -16,7 +16,7 @@ trait stdImplicits {
   }
 
   implicit class boolOps(x: Boolean) { //
-    /**usage : true ? (1,2) */
+    /** usage : true ? (1,2) */
     def ?[t](a: t, b: t): t = if (x) a else b
   }
 

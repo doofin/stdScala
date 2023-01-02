@@ -2,7 +2,7 @@
 //                  "jitpack" at "https://jitpack.io")
 //scala js
 //https://github.com/circe/circe/issues/1620
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.3.1") //"1.1.1"
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.12.0") //"1.1.1" "1.3.1"
 //cross
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.2.0")
 //bundler

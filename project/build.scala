@@ -19,14 +19,14 @@ import com.typesafe.sbt.packager.universal.UniversalPlugin
 object build {
   val mScalacOptions = Seq()
   //    Seq("-Xcheckinit", "-language:postfixOps", "-Xmigration", "-deprecation")
-  val supportedScalaVersions = List("2.12.12", "2.13.3")
-  val mScalaVersion = supportedScalaVersions(0)
+  val supportedScalaVersions = List("2.12.12", "2.13.10", "3.2.1")
+  val mScalaVersion = supportedScalaVersions(2) //set to 3
 
   val cmSettings =
     Seq(
       name := "stdscala",
       organization := "com.doofin",
-      version := "0.2-SNAPSHOT"
+      version := "1.2-SNAPSHOT" //for scala3
     )
 
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
@@ -46,15 +46,17 @@ object build {
       libraryDependencies ++= deps.sharedDeps.value
     )
     .jvmSettings(
+      cmSettings,
       libraryDependencies ++= (deps.jvmDeps
         ++ (if (!checkScV().value)
               Seq(
-                "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0"
+                "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4"
                 // "org.apache.spark" %% "spark-core" % "2.4.0" % "provided"
               )
             else Seq()))
     )
     .jsSettings(
+      cmSettings,
       libraryDependencies ++= deps.jsDeps.value,
       webpackBundlingMode := BundlingMode.LibraryAndApplication(),
       scalaJSUseMainModuleInitializer := true,
@@ -119,4 +121,5 @@ object build {
       }
     )
   }
+
 }
