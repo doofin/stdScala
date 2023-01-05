@@ -26,6 +26,8 @@ trait miscUtils {
   }
 
   def pt(x: Any*) = {
+    // x.foldLeft("")((a, b) => a + b.toString())
+
     x foreach { x =>
       print(x)
       print(",")
