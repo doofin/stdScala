@@ -4,6 +4,8 @@ import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 import scala.language.implicitConversions
 
+object stdImplicits extends stdImplicits
+
 trait stdImplicits {
 
   implicit def i2f(d: Int): Float = d.toFloat

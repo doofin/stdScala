@@ -2,9 +2,10 @@ package com.doofin.stdScala
 
 import scala.language.postfixOps
 import scala.math._
-import com.doofin.stdScala.stdScalaCross.*
-
+// import com.doofin.stdScalaCross.*
+// import com.doofin.stdScala.stdScalaCross.*
 // import com.doofin.stdScala.All // import  com.doofin.stdScala.
+import stdImplicits.*
 
 trait math {
 
