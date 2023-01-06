@@ -1,12 +1,11 @@
 # stdScala
 
-[![](https://jitpack.io/v/doofin/stdScala.svg)](https://jitpack.io/#doofin/stdScala)
-
 a very small library with convent debug, math and others for scala
 
 publish on jitpack
 
 # usage : 
+check latest commit at [![](https://jitpack.io/v/doofin/stdScala.svg)](https://jitpack.io/#doofin/stdScala)
 
 add following in sbt for scala 3 :
 
