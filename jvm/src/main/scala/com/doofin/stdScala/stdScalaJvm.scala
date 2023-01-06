@@ -2,6 +2,7 @@ package com.doofin
 import com.doofin.stdScala._
 import scala.io.AnsiColor._
 
+/** only import this if in jvm! otherwise use stdScalaCross*/
 object stdScalaJvm
     extends miscUtils
     with dataOps
@@ -9,11 +10,8 @@ object stdScalaJvm
     with stdImplicits
     with jvmUtils {
 
-  val strGreen = (str: String) => s"${GREEN}$str${RESET}"
-  val strRed = (str: String) => s"${RED}$str${RESET}"
-
-  /* extension (str: String) {
+  extension (str: String) {
     def toGreen() = s"${GREEN}$str${RESET}"
     def toRed() = s"${RED}$str${RESET}"
-  } */
+  }
 }

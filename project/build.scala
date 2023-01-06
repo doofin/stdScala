@@ -19,14 +19,14 @@ import com.typesafe.sbt.packager.universal.UniversalPlugin
 object build {
   val mScalacOptions = Seq()
   //    Seq("-Xcheckinit", "-language:postfixOps", "-Xmigration", "-deprecation")
-  val supportedScalaVersions = List("2.12.12", "2.13.10", "3.2.1")
-  val mScalaVersion = supportedScalaVersions(1) //stay at 2.13 for now,not set to 3
+  // val supportedScalaVersions = List("2.12.12", "2.13.10", "3.2.1")
+  val mScalaVersion = "3.2.1" //stay at 2.13 for now,not set to 3
 
   val cmSettings =
     Seq(
       name := "stdscala",
       organization := "com.doofin",
-      version := "1.2-SNAPSHOT" //for scala3
+      version := "3-SNAPSHOT" //for scala3
     )
 
   lazy val sharedPure = (crossProject(JSPlatform, JVMPlatform)
@@ -41,7 +41,7 @@ object build {
     .settings(
       cmSettings,
       resolvers ++= Seq("jitpack" at "https://jitpack.io"),
-      crossScalaVersions := supportedScalaVersions,
+      // crossScalaVersions := supportedScalaVersions,
       scalaVersion := mScalaVersion,
       libraryDependencies ++= deps.sharedDeps.value
     )
@@ -67,40 +67,6 @@ object build {
       scalaJSLinkerConfig ~= { _.withESFeatures(_.withAvoidClasses(false)) }
     )
 
-  /*   lazy val js: Project = (project in file("js"))
-    .dependsOn(sharedPure.js)
-    .enablePlugins(
-      ScalaJSPlugin,
-      ScalaJSBundlerPlugin
-    ) //ScalaJSWeb is for sourcemap
-    .settings(
-      cmSettings,
-      scalacOptions ++= mScalacOptions,
-      libraryDependencies ++= deps.jsDeps.value,
-      webpackBundlingMode := BundlingMode.LibraryAndApplication(),
-      scalaJSUseMainModuleInitializer := true,
-      scalaJSLinkerConfig := StandardConfig()
-        .withSourceMap(false)
-        .withModuleKind(ModuleKind.CommonJSModule),
-//      https://github.com/scala-js/scala-js/issues/4305
-      scalaJSLinkerConfig ~= { _.withESFeatures(_.withAvoidClasses(false)) }
-    )
-
-  lazy val jvm = (project in file("jvm"))
-    .dependsOn(sharedPure.jvm)
-    .enablePlugins(JavaAppPackaging, UniversalPlugin)
-    .settings(
-      cmSettings,
-      crossScalaVersions := supportedScalaVersions,
-      libraryDependencies ++= (deps.jvmDeps
-        ++ (if (!checkScV().value)
-              Seq(
-                "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.0",
-                "org.apache.spark" %% "spark-core" % "2.4.0" % "provided"
-              )
-            else Seq()))
-    )
-   */
   def check212Or213() = Def.setting {
     val scalaV = scalaVersion.value
     if (scalaV.startsWith("2.12")) true

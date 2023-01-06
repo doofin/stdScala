@@ -4,12 +4,12 @@ import scala.reflect.ClassTag
 
 trait dataOps {
 
-  /** collect subtype*/
-  def collectT[a, T: ClassTag](xs: Seq[a]): Seq[T] = xs.collect {
-    case x: T => x
+  /** collect subtype */
+  def collectT[a, T: ClassTag](xs: Seq[a]): Seq[T] = xs.collect { case x: T =>
+    x
   }
 
-  /** group by custom equality test*/
+  /** group by custom equality test */
   def groupByEqu[t](p: Seq[t], equF: t => t => Boolean): Seq[Seq[t]] = {
     var ins: Set[t] = p.toSet
     var outs: Seq[Seq[t]] = Seq()
@@ -55,6 +55,5 @@ trait dataOps {
     }
     r
   }
-
 
 }

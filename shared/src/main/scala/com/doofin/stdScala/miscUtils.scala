@@ -8,16 +8,16 @@ import scala.util.{Failure, Success, Try}
 import scala.language.implicitConversions
 
 /** print utils,etc */
-trait miscUtils {
+ trait miscUtils {
   def getHomeDir: String = System.getProperty("user.home")
   def getCurrDir: String = System.getProperty("user.dir")
   val currTime = () => System.currentTimeMillis()
   def getDateStr = new Date().toLocaleString
   def printdate() = lg(getDateStr)
 
-  /** throw new RuntimeException */
-  def throwE[t](f: => t, msg: String = "") = {
-    Try(f) match {
+  /** throw new RuntimeException if codeBlock fails */
+  def throwE[t](codeBlock: => t, msg: String = "") = {
+    Try(codeBlock) match {
       case Failure(exception) =>
         throw new RuntimeException(s"$msg , ${exception.getMessage}")
       case Success(value) => value
@@ -27,12 +27,8 @@ trait miscUtils {
 
   def pt(x: Any*) = {
     // x.foldLeft("")((a, b) => a + b.toString())
-
-    x foreach { x =>
-      print(x)
-      print(",")
-    }
-    println()
+    val str = x.reduceOption((a, b) => s"$a,$b").getOrElse("")
+    println(str)
     // print(1, 2, "aa", "aagc")
   }
 
@@ -56,10 +52,12 @@ trait miscUtils {
     result
   }
 
-  def encloseDebug[t](d: String, showTime: Boolean = true)(f: => t): t = {
-    val st = () => if (showTime) getDateStr else ""
+  def encloseDebug[t](d: String, printTime: Boolean = false)(
+      codeBlock: => t
+  ): t = {
+    val st = () => if (printTime) getDateStr else ""
     println(s"---------------- $d start ------" + st())
-    val r = f
+    val r = codeBlock
     println(s"---------------- $d end -----" + st())
     r
   }
