@@ -2,17 +2,20 @@ package com.doofin.stdScala
 
 import scala.language.postfixOps
 import scala.math._
+import com.doofin.stdScala.stdScalaCross.*
+
+// import com.doofin.stdScala.All // import  com.doofin.stdScala.
 
 trait math {
 
   /** boolean */
-  /**true if one of args is true*/
+  /** true if one of args is true */
   def or(bs: Boolean*): Boolean = bs.exists(x => x)
 
-  /**true if all are true*/
+  /** true if all are true */
   def all(bs: Boolean*): Boolean = bs.forall(x => x)
 
-  /**trigometry*/
+  /** trigometry */
   def tan2sin(tan: Double) = {
     val tan2 = tan ^ 2
     val s2 = tan2 / (1 + tan2)
@@ -24,23 +27,23 @@ trait math {
     sqrt(s2)
   }
 
-  /**statistics*/
+  /** statistics */
   def avg(xs: Seq[Float]) = {
     val len = xs.length
     xs.sum / len
   }
 
-  /** linear algebra*/
+  /** linear algebra */
   object Vector2 {
 
-    /**additive identity*/
+    /** additive identity */
     def addId() = Vector2(0, 0)
 
-    /**multiplicative identity*/
+    /** multiplicative identity */
     def mulId() = Vector2(1, 1)
   }
 
-  /**2 dimensional vector*/
+  /** 2 dimensional vector */
   case class Vector2(x: Float, y: Float) {
     def isUnit = x == 0 & y == 0
     def round2Int = Vector2(x.floor, y.floor)
