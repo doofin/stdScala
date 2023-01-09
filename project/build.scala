@@ -47,13 +47,7 @@ object build {
     )
     .jvmSettings(
       cmSettings,
-      libraryDependencies ++= (deps.jvmDeps
-        ++ (if (!checkScV().value)
-              Seq(
-                "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4"
-                // "org.apache.spark" %% "spark-core" % "2.4.0" % "provided"
-              )
-            else Seq()))
+      libraryDependencies ++= deps.jvmDeps
     )
     .jsSettings(
       cmSettings,
@@ -66,26 +60,5 @@ object build {
 //      https://github.com/scala-js/scala-js/issues/4305
       scalaJSLinkerConfig ~= { _.withESFeatures(_.withAvoidClasses(false)) }
     )
-
-  def check212Or213() = Def.setting {
-    val scalaV = scalaVersion.value
-    if (scalaV.startsWith("2.12")) true
-    else {
-      println("scalaV:", scalaV)
-      false
-    }
-  }
-
-  def checkScV() = {
-    Def.setting(
-      CrossVersion
-        .partialVersion(scalaVersion.value) match {
-        case Some((2, major)) if major <= 12 =>
-          true
-        case _ =>
-          false
-      }
-    )
-  }
 
 }
