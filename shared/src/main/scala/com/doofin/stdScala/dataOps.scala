@@ -11,6 +11,7 @@ trait dataOps {
 
   /** group by custom equality test */
   def groupByEqu[t](p: Seq[t], equF: t => t => Boolean): Seq[Seq[t]] = {
+    // val equApp = equF(null)
     var ins: Set[t] = p.toSet
     var outs: Seq[Seq[t]] = Seq()
     def mv(): Unit = {
@@ -55,5 +56,17 @@ trait dataOps {
     }
     r
   }
+
+  /* const map on tuples from Il_totore*/
+  type Mapped[T <: Tuple, A, B] <: Tuple = T match
+    case EmptyTuple => EmptyTuple
+    case A *: tail  => B *: Mapped[tail, A, B]
+
+  extension [T <: Tuple](tuple: T)
+    def mapConst[A, B](f: A => B): Mapped[T, A, B] = tuple match
+      case EmptyTuple => EmptyTuple.asInstanceOf[Mapped[T, A, B]]
+      case head *: tail =>
+        (f(head.asInstanceOf[A]) *: tail.mapConst(f))
+          .asInstanceOf[Mapped[T, A, B]]
 
 }
