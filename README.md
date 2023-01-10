@@ -1,17 +1,29 @@
 # stdScala
 
-[![](https://jitpack.io/v/doofin/stdScala.svg)](https://jitpack.io/#doofin/stdScala)
-
-a very small library a math and other std lib functions for scala
+a very small library with convent debug, math and others for scala
 
 publish on jitpack
 
 # usage : 
+check latest commit at [![](https://jitpack.io/v/doofin/stdScala.svg)](https://jitpack.io/#doofin/stdScala)
 
-`"com.github.doofin.stdScala" %% "stdscala"  % "c9d19a6db3"`
+add following in sbt for scala 3 :
+
+`resolvers += "jitpack" at "https://jitpack.io"`
+
+`"com.github.doofin.stdScala" %% "stdscala"  % "2515133003"`
 
 # content
 
-flattenTuple for flatten tuples : (1, ((2, 3), 4)) => (1, 2, 3, 4)
+## dbg print similar to it in rust : 
 
-useful math ops: like `def or(bs: Boolean*) ` and vectors
+![image](https://user-images.githubusercontent.com/6041353/211036426-735c9124-41df-41ff-a738-9c85b1acff4d.png)
+
+will give 
+
+![image](https://user-images.githubusercontent.com/6041353/211036338-e0527e35-53b2-4372-8416-1dcc4a6add5e.png)
+
+
+## math ops
+
+`def or(bs: Boolean*) ` and vectors
