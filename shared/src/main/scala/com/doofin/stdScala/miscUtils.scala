@@ -1,46 +1,27 @@
 package com.doofin.stdScala
 
-import java.util.Base64._
+import scala.util.*
+
 import java.util.Date
 import java.util.concurrent.TimeUnit
-import scala.util.{Failure, Success, Try}
 
-import scala.language.implicitConversions
+import scala.concurrent.{Await, ExecutionContext, Future, duration}
+import scala.concurrent.duration.Duration
 
 /** print utils,etc */
- trait miscUtils {
-  def getHomeDir: String = System.getProperty("user.home")
-  def getCurrDir: String = System.getProperty("user.dir")
-  val currTime = () => System.currentTimeMillis()
-  def getDateStr = new Date().toLocaleString
-  def printdate() = lg(getDateStr)
+trait miscUtils {
 
-  /** throw new RuntimeException if codeBlock fails */
-  def throwE[t](codeBlock: => t, msg: String = "") = {
-    Try(codeBlock) match {
+  /** throw new RuntimeException if block fails */
+  def throwE[T](block: => T, msg: String = ""): T = {
+    Try(block) match {
       case Failure(exception) =>
-        throw new RuntimeException(s"$msg , ${exception.getMessage}")
+        throw new RuntimeException(
+          s"${if msg.isEmpty() then "" else msg + ", "}${exception.getMessage}"
+        )
       case Success(value) => value
     }
 
   }
-
-  def pt(x: Any*) = {
-    // x.foldLeft("")((a, b) => a + b.toString())
-    val str = x.reduceOption((a, b) => s"$a,$b").getOrElse("")
-    println(str)
-    // print(1, 2, "aa", "aagc")
-  }
-
-  /** simple log */
-  def lg[t](x: t) = { println(x.toString); x }
-
-  /** pretty print */
-  def pp(x: Any, w: Int = 100): Unit =
-    pprint.PPrinter.BlackWhite.pprintln(x, w, 100000)
-
-  def ppc(x: Any, w: Int = 100): Unit =
-    pprint.pprintln(x, w, 100000)
 
   def time[R](block: => R): R = {
     val t0 = System.nanoTime()
@@ -52,14 +33,9 @@ import scala.language.implicitConversions
     result
   }
 
-  def encloseDebug[t](d: String, printTime: Boolean = false)(
-      codeBlock: => t
-  ): t = {
-    val st = () => if (printTime) getDateStr else ""
-    println(s"---------------- $d start ------" + st())
-    val r = codeBlock
-    println(s"---------------- $d end -----" + st())
-    r
-  }
+  extension [t](f: Future[t]) {
 
+    /** awaitFuture */
+    def unwarp = Await.result(f, Duration.Inf)
+  }
 }

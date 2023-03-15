@@ -2,10 +2,11 @@ package com.doofin.stdScala
 
 import scala.reflect.ClassTag
 
-trait dataOps {
+/** operations on datatypes */
+object dataOps {
 
   /** collect subtype */
-  def collectT[a, T: ClassTag](xs: Seq[a]): Seq[T] = xs.collect { case x: T =>
+  def collectT[A, T: ClassTag](xs: Seq[A]): Seq[T] = xs.collect { case x: T =>
     x
   }
 
@@ -57,12 +58,27 @@ trait dataOps {
     r
   }
 
+  extension (x: Double) {
+    def ^(i: Double) = scala.math.pow(x, i)
+  }
+
+  extension (x: Boolean) { //
+    /** usage : true ? (1,2) */
+    def ?[t](a: t, b: t): t = if x then a else b
+  }
+
+  /* create tuples */
+  extension [A](x: A) {
+    inline def --[B](y: B): (A, B) = (x, y)
+  }
+
   /* const map on tuples from Il_totore*/
   type Mapped[T <: Tuple, A, B] <: Tuple = T match
     case EmptyTuple => EmptyTuple
     case A *: tail  => B *: Mapped[tail, A, B]
 
   extension [T <: Tuple](tuple: T)
+    /** map for fixed length vector */
     def mapConst[A, B](f: A => B): Mapped[T, A, B] = tuple match
       case EmptyTuple => EmptyTuple.asInstanceOf[Mapped[T, A, B]]
       case head *: tail =>

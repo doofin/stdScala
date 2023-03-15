@@ -20,7 +20,7 @@ object build {
   val mScalacOptions = Seq()
   //    Seq("-Xcheckinit", "-language:postfixOps", "-Xmigration", "-deprecation")
   // val supportedScalaVersions = List("2.12.12", "2.13.10", "3.2.1")
-  val mScalaVersion = "3.2.1" //stay at 2.13 for now,not set to 3
+  val mScalaVersion = "3.2.1" //dbg only works for scala 3
 
   val cmSettings =
     Seq(

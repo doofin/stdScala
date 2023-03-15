@@ -1,17 +1,24 @@
 # stdScala
 
-a very small library with convent debug, math and others for scala
+a concise library with debug, math and others utils for scala 3
 
-publish on jitpack
+published on jitpack
 
 # usage : 
-check latest commit at [![](https://jitpack.io/v/doofin/stdScala.svg)](https://jitpack.io/#doofin/stdScala)
+find latest commit at [![](https://jitpack.io/v/doofin/stdScala.svg)](https://jitpack.io/#doofin/stdScala)
 
-add following in sbt for scala 3 :
+add following in sbt :
 
 `resolvers += "jitpack" at "https://jitpack.io"`
 
-`"com.github.doofin.stdScala" %% "stdscala"  % "2515133003"`
+`"com.github.doofin.stdScala" %% "stdscala"  % "2515133003"` or replace last string with latest commit
+
+## in JVM
+
+`import com.doofin.stdScalaCross.*`
+
+## in JS
+`import com.doofin.stdScalaJvm.*`
 
 # content
 
@@ -26,4 +33,18 @@ will give
 
 ## math ops
 
-`def or(bs: Boolean*) ` and vectors
+logical connectives like `def or(bs: Boolean*) ` and 2D vectors
+
+## jvm utils
+
+read,write text file
+
+# contributing
+
+since it's a cross project, the main shared codebase reside in https://github.com/doofin/stdScala/tree/master/shared/src/main/scala/com/doofin/stdScala
+
+
+the jvm specific code is at https://github.com/doofin/stdScala/tree/master/jvm/src/main/scala/com/doofin/stdScala
+
+
+start by following the entry at https://github.com/doofin/stdScala/blob/master/shared/src/main/scala/com/doofin/stdScala/stdScalaCross.scala  with metals IDE 
