@@ -19,7 +19,7 @@ import com.typesafe.sbt.packager.universal.UniversalPlugin
 object build {
   val mScalacOptions = Seq()
   //    Seq("-Xcheckinit", "-language:postfixOps", "-Xmigration", "-deprecation")
-  val supportedScalaVersions = List("2.12.12", "2.13.3")
+  val supportedScalaVersions = List("2.12.12", "2.13.14")
   val mScalaVersion = supportedScalaVersions(0)
 
   val cmSettings =

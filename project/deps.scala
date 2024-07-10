@@ -17,10 +17,9 @@ object deps {
   /**shared deps*/
   val sharedDeps = Def.setting(
     Seq(
-      "io.suzaku" %%% "boopickle" % "1.3.3",
+      "io.suzaku" %%% "boopickle" % "1.4.0",
       "com.lihaoyi" %%% "pprint" % "0.6.0",
-      "com.lihaoyi" %%% "autowire" % "0.3.2",
-      "org.latestbit" %%% "circe-tagged-adt-codec" % "0.9.1",
+      "org.latestbit" %%% "circe-tagged-adt-codec" % "0.10.0"
       "com.chuusai" %% "shapeless" % "2.3.3"
     )
   )
