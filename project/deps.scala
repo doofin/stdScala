@@ -19,7 +19,7 @@ object deps {
     Seq(
       "io.suzaku" %%% "boopickle" % "1.4.0",
       "com.lihaoyi" %%% "pprint" % "0.6.0",
-      "org.latestbit" %%% "circe-tagged-adt-codec" % "0.10.0"
+      "org.latestbit" %%% "circe-tagged-adt-codec" % "0.10.0",
       "com.chuusai" %% "shapeless" % "2.3.3"
     )
   )
