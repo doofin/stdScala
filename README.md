@@ -11,7 +11,14 @@ add following in sbt :
 
 `resolvers += "jitpack" at "https://jitpack.io"`
 
-`"com.github.doofin.stdScala" %% "stdscala"  % "2515133003"` or replace last string with latest commit
+for scala3:
+
+`"com.github.doofin.stdScala" %% "stdscala"  % "2515133003"` 
+or replace last string with latest commit
+
+for scala2:
+
+`"com.github.doofin.stdScala" %%% "stdscala" % "scala213-910b407538-1"`
 
 ## in JVM
 
