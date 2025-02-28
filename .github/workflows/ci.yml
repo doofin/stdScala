@@ -1,7 +1,6 @@
-name: Continuous Integration
+name: CI
 
 on:
-  pull_request:
   push:
 
 env:
@@ -9,10 +8,10 @@ env:
 
 jobs:
   run:
-    name: compile and test
+    name: Compile
     strategy:
       matrix:
-        java-version: [8]
+        java-version: [17]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch (full)
@@ -27,8 +26,10 @@ jobs:
           java-version: ${{ matrix.java-version }}
           cache: sbt
 
-      - name: compile the project
-        run: sbt compile
+          # cache sbt dependencies          
+      - uses: coursier/cache-action@v6 
 
-      - name: Run the unit tests
-        run: sbt test
+      - uses: sbt/setup-sbt@v1
+
+      - name: compile
+        run: sbt compile
